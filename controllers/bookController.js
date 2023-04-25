@@ -1,7 +1,7 @@
 const Book = require("../models/Book")
 
 // GET all books
-const getAllBooks = async (req, res, next) => {
+exports.getAllBooks = async (req, res, next) => {
     try{
         const books = await Book.find()
         res.status(200).json(books)
@@ -11,9 +11,10 @@ const getAllBooks = async (req, res, next) => {
 }
 
 //GET a book by id
-const getBookById = async (req, res, next) => {
+exports.getBookById = async (req, res, next) => {
+    let bookId = req.params.id
     try{
-        const book = await Book.findById(req.params.id)
+        const book = await Book.findById(bookId)
         if(!book) return res.status(404).json({ message: "Book not found" })
         res.status(200).json(book)
     } catch (err) {
@@ -22,18 +23,40 @@ const getBookById = async (req, res, next) => {
 }
 
 // CREATE a new book
-const createBook = async(req, res, next) => {
+exports.createBook = async (req, res, next) => {
+    let book = {
+        title: req.body.title,
+        author: req.body.author,
+        description: req.body.description, 
+        price: req.body.price,
+        categories: req.body.categories,
+        quantity: req.body.quantity,
+        imageUrl: req.body.imageUrl
+    }
     try{
-
+        await Book.create(book)
+        res.status(200).json({ message: "Book created successfully"})
     } catch (err) {
-
+        next(err)
     }
 }
 
-
-
-
-module.exports = {
-    getAllBooks, 
-    getBookById,
+//UPDATE a book
+exports.updateBook = async (req, res, next) => {
+    let bookId = req.params.bookId
+    let updatedBookData = {
+        title: req.body.title,
+        author: req.body.author,
+        description: req.body.description, 
+        price: req.body.price,
+        categories: req.body.categories,
+        quantity: req.body.quantity,
+        imageUrl: req.body.imageUrl
+    }
+    try{
+        await Books.findOneAndUpdate(bookId,{ $set: updatedBookData})
+        res.status(201).json({ message: "Book updated succesfully"})
+    } catch (err) {
+        next(err)
+    }
 }
