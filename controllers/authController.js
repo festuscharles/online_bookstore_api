@@ -20,11 +20,9 @@ exports.signUp = async (req, res, next) => {
         }
         const savedUser = await User.create(user)
 
-        //generate JWT token and send it in response
-        const token = jwt.sign({ userId: savedUser._id }, process.env.JWT_SECRET, { expiresIn: "1h" })
         res.status(201).json({ 
-            message: "Sign up successful",
-            token 
+            savedUser,
+            message: "Sign up successful" 
         })
     } catch (err) {
         next(err)
