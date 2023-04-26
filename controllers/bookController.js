@@ -43,8 +43,8 @@ exports.createBook = async (req, res, next) => {
 
 //UPDATE a book
 exports.updateBook = async (req, res, next) => {
-    let bookId = req.params.bookId
-    let updatedBookData = {
+    let bookId = req.params.id
+    let updateBookData = {
         title: req.body.title,
         author: req.body.author,
         description: req.body.description, 
@@ -54,8 +54,19 @@ exports.updateBook = async (req, res, next) => {
         imageUrl: req.body.imageUrl
     }
     try{
-        await Books.findOneAndUpdate(bookId,{ $set: updatedBookData})
+        await Books.findOneAndUpdate(bookId, {$set: updateBookData})
         res.status(201).json({ message: "Book updated succesfully"})
+    } catch (err) {
+        next(err)
+    }
+}
+
+//DELETE a book
+exports.deleteBook = async (req, res, next) => {
+    let bookId = req.params.id
+    try {
+        await Book.findByIdAndRemove(bookId)
+        res.status(200).json({message: "Book deleted successfully"})
     } catch (err) {
         next(err)
     }
