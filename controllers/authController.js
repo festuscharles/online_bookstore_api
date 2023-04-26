@@ -52,3 +52,8 @@ exports.logIn = async (req, res, next) => {
         next(err)
     }
 }
+
+// LOG OUT a user
+exports.logOut = (req, res, next) => {
+    res.status(200).json({ message: "Logged out successfully"})
+}
