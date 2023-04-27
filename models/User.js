@@ -19,8 +19,12 @@ const userSchema = new Schema ({
         type: String,
         enum: ['user', 'admin'],
         default: 'user' 
+    }, 
+    image: {
+        type: String,
+        required: true
     }
-}, { timestammp: true})
+}, { timestammp: true })
 
 const User = mongoose.model('User', userSchema)
 module.exports = User

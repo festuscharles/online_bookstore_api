@@ -26,11 +26,11 @@ const bookSchema = new Schema ({
         type: Number,
         required: true
     },
-    imageUrl: {
+    image: {
         type: String,
         required: true
     }
-}, { timestamp: true})
+}, { timestamp: true })
 
 const Book = mongoose.model('Book', bookSchema)
 module.exports = Book

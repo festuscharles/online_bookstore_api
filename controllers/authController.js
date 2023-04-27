@@ -25,7 +25,7 @@ exports.signUp = async (req, res, next) => {
             message: "Sign up successful" 
         })
     } catch (err) {
-        next(err)
+        res.json({ message: err})
     }
 }
 
@@ -49,7 +49,7 @@ exports.logIn = async (req, res, next) => {
             token 
         })
     } catch (err) {
-        next(err)
+        res.json({ message: err})
     }
 }
 
