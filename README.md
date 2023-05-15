@@ -27,14 +27,3 @@ API endpoints
 •	POST /api/books (to create a new book)
 •	PUT /api/books/:id (to update a book by its ID)
 •	DELETE /api/books/:id (to delete a book by its ID)
-3.	Orders:
-•	GET /api/orders (to retrieve all orders)
-•	GET /api/orders/:id (to retrieve a single order by its ID)
-•	POST /api/orders (to create a new order)
-•	PUT /api/orders/:id (to update an order by its ID)
-•	DELETE /api/orders/:id (to delete an order by its ID)
-4.	Payment:
-•	POST /api/payment/charge (to charge a user for an order)
-5.	User Profile:
-•	GET /api/users/:id (to retrieve user profile)
-•	PUT /api/users/:id (to update user profile)
