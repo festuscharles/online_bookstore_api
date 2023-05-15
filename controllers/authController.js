@@ -1,4 +1,4 @@
-const User = require("../models/User")
+const { User } = require("../models/User")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -7,27 +7,26 @@ require("dotenv").config()
 exports.signUp = async (req, res, next) => {   
     try {
         const { name, email, password } = req.body
-        const userExists = await User.findOne(email)
+        const imagePath = req.file.path
+        
+        // check if email is already used
+        const userExists = await User.findOne({email})
         if(userExists) return res.status(409).json({ message: "Email already exist"})
-    
+        
         //hash the password
         const hashedPassword = await bcrypt.hash(password, 10)
-
         const user = {
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            image: imagePath
         }
-        const savedUser = await User.create(user)
-
-        res.status(201).json({ 
-            savedUser,
-            message: "Sign up successful" 
-        })
+        await User.create(user)
+        res.status(201).json({ message: "Sign up successful" })
     } catch (err) {
-        res.json({ message: err})
+        next(err)
     }
-}
+} 
 
 // LOG IN an existing user
 exports.logIn = async (req, res, next) => {
@@ -35,11 +34,11 @@ exports.logIn = async (req, res, next) => {
         const { email, password } = req.body
         
         // check if user with email already exists
-        const user = await User.findOne(email)
+        const user = await User.findOne({email})
         if(!user) return res.status(401).json({ message: "Invalid email or  password" })
 
         // compare the hashed password with the given password
-        const IsPasswordMatch = await bcrypt.compare( password, user.password)
+        const IsPasswordMatch = await bcrypt.compare( password, user.password )
         if(!IsPasswordMatch) return res.status(401).json({ message: "Invalid email or password" })
 
         // generate JWT token and send it in response
@@ -49,7 +48,7 @@ exports.logIn = async (req, res, next) => {
             token 
         })
     } catch (err) {
-        res.json({ message: err})
+        next(err)
     }
 }
 

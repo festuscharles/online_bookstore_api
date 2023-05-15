@@ -23,7 +23,7 @@ const userImageStorage = multer.diskStorage({
 })
 
 // Create multer upload object for book image and user image
-const bookImageUpload = multer({ 
+exports.bookImageUpload = multer({ 
     storage: bookImageStorage,
     fileFilter: function (req, file, cb) {
         if(
@@ -39,7 +39,7 @@ const bookImageUpload = multer({
         fileSize: 1024 * 1024 * 4
     }
 })
-const userImageUpload = multer({ 
+exports.userImageUpload = multer({ 
     storage: userImageStorage,
     fileFilter: function (req, file, cb) {
         if(
@@ -55,27 +55,3 @@ const userImageUpload = multer({
         fileSize: 1024 * 1024 * 4
     } 
 })
-
-// Middleware for handling book image upload
-exports.bookImageUploadMiddleware = (req, res, next) => {
-    bookImageUpload.array('bookImages[]') (req, res, (err) => {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json({ error: "Error uploading book image"})
-        } else if (err) {
-            return res.status(500).json({ error: err.message })
-        }
-        next()
-    })
-}
-
-// Middleware for handling user image upload
-exports.userImageUploadMiddleware = (req, res, next) => {
-    userImageUpload.single('userImage') (req, res, (err) => {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json({ error: "Error uploading user image"})
-        } else if (err) {
-            return res.status(500).json({ error: err.message })
-        }
-        next()
-    })
-}

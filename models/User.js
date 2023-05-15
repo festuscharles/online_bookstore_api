@@ -22,9 +22,8 @@ const userSchema = new Schema ({
     }, 
     image: {
         type: String,
-        required: true
+        required: false
     }
-}, { timestammp: true })
+}, { timestamp: true })
 
-const User = mongoose.model('User', userSchema)
-module.exports = User
+exports.User = mongoose.model('User', userSchema)
