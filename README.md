@@ -1,7 +1,6 @@
 # online_bookstore_api
 A RESTful API for an online bookstore. The API provide various endpoints to create, read, update, and delete books, as well as allow users to browse and search for books. The API also support user authentication and authorization.
 
-Project Title: Online Bookstore API
 Scope The scope of the project is to build a RESTful API for an online bookstore. The API should provide various endpoints to create, read, update, and delete books, as well as allow users to browse and search for books. The API should also support user authentication and authorization.
 Features
 1.	User authentication and authorization
